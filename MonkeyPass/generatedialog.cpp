@@ -1,14 +1,17 @@
 #include "generatedialog.h"
 #include "ui_generatedialog.h"
 #include "configuration.h"
+#include "mktpassword.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QPushButton>
 
 GenerateDialog::GenerateDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GenerateDialog)
 {
     ui->setupUi(this);
+    initUi();
 }
 
 void GenerateDialog::initUi() {
@@ -25,6 +28,8 @@ void GenerateDialog::initUi() {
     ui->acceptButton->setMinimumWidth(Configuration::pushButtonMaxWidth);
     ui->acceptButton->setMinimumHeight(Configuration::pushButtonMinHeight);
 
+    connect(ui->generateButton, &QPushButton::pressed, this, &GenerateDialog::generatePassword);
+
     auto buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(ui->generateButton);
     buttonLayout->addWidget(ui->cancelButton);
@@ -39,6 +44,9 @@ void GenerateDialog::initUi() {
 
 
 void GenerateDialog::generatePassword() {
+    MKTPassword mktpassword;
+    auto newPassword = mktpassword.generate(8);
+    ui->passwordPreview->setText(newPassword);
 
 }
 

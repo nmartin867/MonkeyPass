@@ -5,8 +5,6 @@
 #-------------------------------------------------
 
 QT       -= gui
-
-TARGET = MKTPassword
 TEMPLATE = lib
 
 DEFINES += MKTPASSWORD_LIBRARY
@@ -33,3 +31,4 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
