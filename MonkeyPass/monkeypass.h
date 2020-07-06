@@ -18,11 +18,16 @@ public:
 
 private:
     Ui::MonkeyPass *ui;
-    PassFileManager *passFileManger;
+    PassFileManager *m_passFileManger;
 
-    QString  masterPassword;
-    QString  newPassword;
-    QString  passwordConfirm;
+    // ui widgets
+    QString  m_masterPassword;
+    QString  m_newPassword;
+    QString  m_passwordConfirm;
+
+    // menui actions
+    QAction *m_enpass_import;
+
 
     bool formValid;
 
@@ -37,8 +42,11 @@ private:
     bool creationPasswordsMatch();
     void createNewAccount(); 
 
+    void createMenuItems();
+    void createMenuActions();
 private slots:
      void showGenerateDialog();
+     void on_actionImport_Enpass_File_triggered();
 };
 
 #endif // MONKEYPASS_H

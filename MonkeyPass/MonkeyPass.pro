@@ -9,14 +9,18 @@ HEADERS = \
    $$PWD/monkeypass.h \
    $$PWD/passfilemanager.h \
     ui_monkeypass.h \
-    generatedialog.h
+    generatedialog.h \
+    jsonserializable.h \
+    monkeyentry.h
 
 SOURCES = \
    $$PWD/configuration.cpp \
    $$PWD/main.cpp \
    $$PWD/monkeypass.cpp \
    $$PWD/passfilemanager.cpp \
-    generatedialog.cpp
+    generatedialog.cpp \
+    jsonserializable.cpp \
+    monkeyentry.cpp
 
 INCLUDEPATH = \
     $$PWD/.
@@ -32,4 +36,7 @@ unix:!macx: LIBS += -L$$OUT_PWD/../MKTPassword/ -lMKTPassword
 
 INCLUDEPATH += $$PWD/../MKTPassword
 DEPENDPATH += $$PWD/../MKTPassword
+
+RESOURCES += \
+    mpresources.qrc
 

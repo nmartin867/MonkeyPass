@@ -2,9 +2,16 @@
 #include "ui_monkeypass.h"
 #include "configuration.h"
 #include "generatedialog.h"
+#include "monkeyentry.h"
 #include <QtDebug>
 #include <QLineEdit>
+#include <QFileDialog>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <QDebug>
+#include <QStandardPaths>
+
 
 
 MonkeyPass::MonkeyPass(QWidget *parent) :
@@ -12,13 +19,15 @@ MonkeyPass::MonkeyPass(QWidget *parent) :
     ui(new Ui::MonkeyPass)
 {
     ui->setupUi(this);
-    passFileManger = new PassFileManager;
-    if (passFileManger->keyFileExists()) {
+    m_passFileManger = new PassFileManager;
+    if (m_passFileManger->keyFileExists()) {
         initLoginForm();
     } else {
         ui->stackedWidget->setCurrentIndex(1);
         initCreateForm();
     }
+    createMenuActions();
+    createMenuItems();
 }
 
 void MonkeyPass::initLoginForm() {
@@ -56,28 +65,39 @@ void MonkeyPass::initCreateForm() {
 
 }
 
+void MonkeyPass::createMenuItems() {
+    auto fileMenu = ui->menuBar->addMenu("&File");
+    fileMenu->addAction(m_enpass_import);
+}
+
+void MonkeyPass::createMenuActions () {
+    m_enpass_import = new QAction("Import Enpass JSON");
+    m_enpass_import->setStatusTip("Import Enpass JSON file");
+    connect(m_enpass_import, &QAction::triggered, this, &MonkeyPass::on_actionImport_Enpass_File_triggered);
+}
+
 void MonkeyPass::onMasterPasswordChange() {
-    masterPassword = ui->masterPassword->text();
-    qDebug() << masterPassword << "\n";
+    m_masterPassword = ui->masterPassword->text();
+    qDebug() << m_masterPassword << "\n";
 }
 
 void MonkeyPass::onNewPasswordChange() {
-    newPassword = ui->newPassword->text();
+    m_newPassword = ui->newPassword->text();
     validateForm();
-    qDebug() << newPassword << "\n";
+    qDebug() << m_newPassword << "\n";
 
 }
 
 void MonkeyPass::onPasswordConfirmChange() {
-    passwordConfirm = ui->passwordConfirm->text();
+    m_passwordConfirm = ui->passwordConfirm->text();
     validateForm();
-    qDebug() << newPassword << "\n";
+    qDebug() << m_newPassword << "\n";
 }
 
 void MonkeyPass::validateForm() {
     if (ui->stackedWidget->currentIndex() == 0) {
         //TODO: authenticate
-        formValid = !masterPassword.isEmpty();
+        formValid = !m_masterPassword.isEmpty();
 
     } else {
         formValid = creationPasswordsMatch();
@@ -86,9 +106,9 @@ void MonkeyPass::validateForm() {
 }
 
 bool MonkeyPass::creationPasswordsMatch() {
-    return newPassword == passwordConfirm
-            && !newPassword.isEmpty()
-            && !passwordConfirm.isEmpty();
+    return m_newPassword == m_passwordConfirm
+            && !m_newPassword.isEmpty()
+            && !m_passwordConfirm.isEmpty();
 }
 
 void MonkeyPass::createNewAccount() {
@@ -101,8 +121,29 @@ void MonkeyPass::showGenerateDialog() {
     dialog->show();
 }
 
+void MonkeyPass::on_actionImport_Enpass_File_triggered()
+{
+    auto enpass_json_file = QFileDialog::getOpenFileName(this, "Open", QDir::homePath(), "*.json");
+    auto json_file = new QFile(enpass_json_file);
+    json_file->open(QIODevice::ReadOnly|QIODevice::Text);
+    auto json_data = json_file->readAll();
+    json_file->close();
+
+    QJsonParseError errorPtr;
+    auto json_doc = QJsonDocument::fromJson(json_data, &errorPtr);
+    if (json_doc.isNull()){
+        //TODO: show error dialog
+        qDebug() << "JSON parse faild\n";
+        return;
+
+    }
+
+    auto entries = MonkeyEntry::fromEnpassJson(json_doc);
+}
+
 MonkeyPass::~MonkeyPass()
 {
-    delete passFileManger;
+    delete m_passFileManger;
     delete ui;
 }
+
