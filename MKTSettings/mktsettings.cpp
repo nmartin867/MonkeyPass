@@ -7,6 +7,11 @@ MKTSettings::MKTSettings(const QString &settingsFilePath)
     loadSettings();
 }
 
+bool MKTSettings::exists(const QString &key)
+{
+    return m_settings->contains(key);
+}
+
 void MKTSettings::loadSettings()
 {
     auto settingsFile = new QFile(m_settings_path);
@@ -17,14 +22,12 @@ void MKTSettings::loadSettings()
     }
 }
 
-template <class T>
-T MKTSettings::readSetting(const QString &key) const
+QVariant MKTSettings::readSetting(const QString &key) const
 {
-    return m_settings->value(key);
+    return m_settings->value(key, 0);
 }
 
-template <class T>
-void MKTSettings::writeSetting(const QString &key, T value)
+void MKTSettings::writeSetting(const QString &key, QVariant &value)
 {
     m_settings->setValue(key, value);
 }

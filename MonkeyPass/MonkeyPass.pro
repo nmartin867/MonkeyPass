@@ -25,25 +25,32 @@ SOURCES = \
 INCLUDEPATH = \
     $$PWD/.
 
-#DEFINES = 
+#DEFINES =
 
 FORMS += \
     monkeypass.ui \
     generatedialog.ui
 
-message(-L$$OUT_PWD/../MKTPassword/ -lMKTPassword)
-unix:!macx: LIBS += -L$$OUT_PWD/../MKTPassword/ -lMKTPassword
+LIBS += \
+    -L$$OUT_PWD/../MKTPassword/ -lMKTPassword \
+    -L$$OUT_PWD/../MKTSettings/ -lMKTSettings
 
-INCLUDEPATH += $$PWD/../MKTPassword
-DEPENDPATH += $$PWD/../MKTPassword
+INCLUDEPATH +=$$PWD/../MKTPassword \
+    $$PWD/../MKTSettings
+
+DEPENDPATH +=$$PWD/../MKTPassword \
+    $$PWD/../MKTSettings
+
 
 RESOURCES += \
     mpresources.qrc
 
+message("**LIBS**" $$LIBS)
+#message("INCLUDEPATH" $$INCLUDEPATH)
+#message($$DEPENDPATH)
+#win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../MKTSettings/release/ -lMKTSettings
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../MKTSettings/debug/ -lMKTSettings
+#else:unix: LIBS += -L$$OUT_PWD/../MKTSettings/ -lMKTSettings
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../MKTSettings/release/ -lMKTSettings
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../MKTSettings/debug/ -lMKTSettings
-else:unix: LIBS += -L$$OUT_PWD/../MKTSettings/ -lMKTSettings
-
-INCLUDEPATH += $$PWD/../MKTSettings
-DEPENDPATH += $$PWD/../MKTSettings
+#INCLUDEPATH += $$PWD/../MKTSettings
+#DEPENDPATH += $$PWD/../MKTSettings

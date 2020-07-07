@@ -4,16 +4,16 @@
 #include "MKTSettings_global.h"
 #include <QString>
 #include <QSettings>
+#include <QVariant>
 
 
 class MKTSETTINGS_EXPORT MKTSettings
 {
 public:
     MKTSettings(const QString &settingsFilePath);
-    template <class T>
-    T readSetting(const QString &key) const;
-    template <class T>
-    void writeSetting(const QString &key, T value);
+    bool exists(const QString &key);
+    QVariant readSetting(const QString &key) const;
+    void writeSetting(const QString &key, QVariant &value);
     ~MKTSettings();
 private:
     QString m_settings_path;

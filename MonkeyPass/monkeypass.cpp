@@ -19,13 +19,17 @@ MonkeyPass::MonkeyPass(QWidget *parent) :
     ui(new Ui::MonkeyPass)
 {
     ui->setupUi(this);
-    m_passFileManger = new PassFileManager;
-    if (m_passFileManger->keyFileExists()) {
+
+    m_mktsettings = new MKTSettings(Configuration::settingsFilePath + "/" + Configuration::settingFileName);
+
+
+    if(m_mktsettings->exists(Configuration::settings_password_key)) {
         initLoginForm();
     } else {
         ui->stackedWidget->setCurrentIndex(1);
         initCreateForm();
     }
+
     createMenuActions();
     createMenuItems();
 }
@@ -143,7 +147,8 @@ void MonkeyPass::on_actionImport_Enpass_File_triggered()
 
 MonkeyPass::~MonkeyPass()
 {
-    delete m_passFileManger;
+    delete m_mktsettings;
+    delete m_mktpassword;
     delete ui;
 }
 

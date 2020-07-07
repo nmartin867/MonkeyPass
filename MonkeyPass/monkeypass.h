@@ -2,7 +2,8 @@
 #define MONKEYPASS_H
 
 #include <QMainWindow>
-#include "passfilemanager.h"
+#include "mktsettings.h"
+#include "mktpassword.h"
 
 namespace Ui {
 class MonkeyPass;
@@ -18,7 +19,8 @@ public:
 
 private:
     Ui::MonkeyPass *ui;
-    PassFileManager *m_passFileManger;
+    MKTSettings* m_mktsettings;
+    MKTPassword* m_mktpassword;
 
     // ui widgets
     QString  m_masterPassword;

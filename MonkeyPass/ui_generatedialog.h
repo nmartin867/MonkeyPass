@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'generatedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.11.3
+** Created by: Qt User Interface Compiler version 5.15.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -28,19 +28,19 @@ public:
     void setupUi(QDialog *GenerateDialog)
     {
         if (GenerateDialog->objectName().isEmpty())
-            GenerateDialog->setObjectName(QStringLiteral("GenerateDialog"));
+            GenerateDialog->setObjectName(QString::fromUtf8("GenerateDialog"));
         GenerateDialog->resize(400, 300);
         passwordPreview = new QLineEdit(GenerateDialog);
-        passwordPreview->setObjectName(QStringLiteral("passwordPreview"));
+        passwordPreview->setObjectName(QString::fromUtf8("passwordPreview"));
         passwordPreview->setGeometry(QRect(140, 60, 113, 26));
         acceptButton = new QPushButton(GenerateDialog);
-        acceptButton->setObjectName(QStringLiteral("acceptButton"));
+        acceptButton->setObjectName(QString::fromUtf8("acceptButton"));
         acceptButton->setGeometry(QRect(290, 170, 92, 26));
         cancelButton = new QPushButton(GenerateDialog);
-        cancelButton->setObjectName(QStringLiteral("cancelButton"));
+        cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
         cancelButton->setGeometry(QRect(170, 170, 92, 26));
         generateButton = new QPushButton(GenerateDialog);
-        generateButton->setObjectName(QStringLiteral("generateButton"));
+        generateButton->setObjectName(QString::fromUtf8("generateButton"));
         generateButton->setGeometry(QRect(30, 170, 92, 26));
 
         retranslateUi(GenerateDialog);
@@ -50,10 +50,10 @@ public:
 
     void retranslateUi(QDialog *GenerateDialog)
     {
-        GenerateDialog->setWindowTitle(QApplication::translate("GenerateDialog", "Dialog", nullptr));
-        acceptButton->setText(QApplication::translate("GenerateDialog", "OK", nullptr));
-        cancelButton->setText(QApplication::translate("GenerateDialog", "Cancel", nullptr));
-        generateButton->setText(QApplication::translate("GenerateDialog", "Generate", nullptr));
+        GenerateDialog->setWindowTitle(QCoreApplication::translate("GenerateDialog", "Dialog", nullptr));
+        acceptButton->setText(QCoreApplication::translate("GenerateDialog", "OK", nullptr));
+        cancelButton->setText(QCoreApplication::translate("GenerateDialog", "Cancel", nullptr));
+        generateButton->setText(QCoreApplication::translate("GenerateDialog", "Generate", nullptr));
     } // retranslateUi
 
 };

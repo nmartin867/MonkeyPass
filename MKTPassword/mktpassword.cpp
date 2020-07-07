@@ -1,12 +1,14 @@
 #include "mktpassword.h"
-
 #include <QVector>
 #include <QRandomGenerator>
 #include <vector>
-#include <sodium.h>
 #include <string.h>
+#include "mktpassword.h"
 
-
+extern "C" {
+  // Get declaration for f(int i, char c, float x)
+  #include <sodium.h>
+}
 
 static QVector<QChar> lowercase  { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 static QVector<QChar> uppercase  { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
@@ -16,14 +18,12 @@ static QVector<QChar> digits  { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
 static QVector<QChar> specialchars  { '&', '~', '#', '-', '_', '$', '%', '*', '!', '?' };
 
 
-MKTPassword::MKTPassword()
-{
-}
+MKTPassword::MKTPassword(){}
 
 QString MKTPassword::encryptPassword(const QString &password) const
 {
     char hashed_password[crypto_pwhash_STRBYTES];
-    char *cPassword = toCStr(password);
+    char *cPassword = password.toUtf8().data();
 
     if(sodium_init() < 0) {
         //TODO: show error
@@ -35,11 +35,6 @@ QString MKTPassword::encryptPassword(const QString &password) const
     }
 
     return QString(cPassword);
-}
-
-bool MKTPassword::validPassword(const QString &password)
-{
-    auto challengeHash = encryptPassword(password);
 }
 
 QString MKTPassword::generate(int length) const
@@ -95,7 +90,6 @@ MKTPassword::PasswordHealth MKTPassword::testPasswordHealth(const QString &passw
     return Weak;
 }
 
-
 MKTPassword::SymbolTypes MKTPassword::types() const
 {
     return m_types;
@@ -119,7 +113,3 @@ void MKTPassword::setCustomChars(const QString &customChars)
         m_customChars.append(c);
 }
 
-char *MKTPassword::toCStr(const QString &string) const
-{
-
-}

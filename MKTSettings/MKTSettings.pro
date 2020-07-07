@@ -3,7 +3,6 @@ QT -= gui
 TEMPLATE = lib
 DEFINES += MKTSETTINGS_LIBRARY
 
-CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -23,8 +22,8 @@ HEADERS += \
     MKTSettings_global.h \
     mktsettings.h
 
-# Default rules for deployment.
 unix {
     target.path = /usr/lib
+    INSTALLS += target
+    CONFIG += shared
 }
-!isEmpty(target.path): INSTALLS += target
