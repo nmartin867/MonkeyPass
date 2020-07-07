@@ -12,7 +12,7 @@ PassFileManager::PassFileManager()
 }
 
 bool PassFileManager::keyFileExists() {
-   QString filePath = storagePath + "/" + Configuration::keyFileName;
+   QString filePath = storagePath + "/" + Configuration::settingFileName;
    qDebug() << "Key File Path: " << QDir::currentPath() << "\n";
    return QFileInfo::exists(filePath);
 }
@@ -24,7 +24,7 @@ void PassFileManager::createKeyFile() {
     if (d.mkpath(d.absolutePath()) && QDir::setCurrent(d.absolutePath())){
         qDebug() << "Current Directory: " << QDir::currentPath();
     }
-    QFile f{storagePath + "/" + Configuration::keyFileName};
+    QFile f{storagePath + "/" + Configuration::settingFileName};
     if (f.open(QIODevice::WriteOnly | QIODevice::Truncate)){
         qDebug() << "Key File Ready!\n";
     }

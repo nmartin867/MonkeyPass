@@ -4,7 +4,7 @@
 const QString Configuration::organization = QString(QStringLiteral("MonkeyManTech"));
 const QString Configuration::applicationName = QString(QStringLiteral("MonkeyPass"));
 const QString Configuration::domain = QString(QStringLiteral("monkeymantech.com"));
-const QString Configuration::keyFileName = QString(QStringLiteral("monkey_pass_db"));
+const QString Configuration::settingFileName = QString(QStringLiteral("mp_settings"));
 const QString Configuration::applicationVersion = QString(QStringLiteral("1.0.0"));
 
 

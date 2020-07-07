@@ -3,7 +3,7 @@
 #include <QString>
 
 struct Configuration {
-    static const QString keyFileName;
+    static const QString settingFileName;
     static const QString organization;
     static const QString domain;
     static const QString applicationName;

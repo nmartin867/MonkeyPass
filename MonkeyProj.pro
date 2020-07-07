@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
+    MKTSettings \
     MonkeyPass \
     MKTPassword
 

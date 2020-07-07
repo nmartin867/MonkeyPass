@@ -1,0 +1,12 @@
+#ifndef MKTSETTINGS_GLOBAL_H
+#define MKTSETTINGS_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(MKTSETTINGS_LIBRARY)
+#  define MKTSETTINGS_EXPORT Q_DECL_EXPORT
+#else
+#  define MKTSETTINGS_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // MKTSETTINGS_GLOBAL_H
