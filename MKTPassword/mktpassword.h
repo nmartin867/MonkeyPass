@@ -29,7 +29,7 @@ public:
     MKTPassword();
 
     QString encryptPassword(const QString &password) const;
-
+    QString decryptPassword(const QString &password) const;
     QString generate(int length) const;
     PasswordHealth testPasswordHealth(const QString &password) const;
 
