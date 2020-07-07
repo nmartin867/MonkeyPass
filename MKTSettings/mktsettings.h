@@ -13,7 +13,7 @@ public:
     MKTSettings(const QString &settingsFilePath);
     bool exists(const QString &key);
     QVariant readSetting(const QString &key) const;
-    void writeSetting(const QString &key, QVariant &value);
+    void writeSetting(const QString &key, const QVariant &value);
     ~MKTSettings();
 private:
     QString m_settings_path;

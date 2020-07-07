@@ -19,19 +19,25 @@ MonkeyPass::MonkeyPass(QWidget *parent) :
     ui(new Ui::MonkeyPass)
 {
     ui->setupUi(this);
+    m_settings_path = Configuration::settingsFilePath + "/" + Configuration::settingFileName;
+    m_mktsettings = new MKTSettings(m_settings_path);
+    m_mktpassword = new MKTPassword();
 
-    m_mktsettings = new MKTSettings(Configuration::settingsFilePath + "/" + Configuration::settingFileName);
-
-
-    if(m_mktsettings->exists(Configuration::settings_password_key)) {
-        initLoginForm();
-    } else {
-        ui->stackedWidget->setCurrentIndex(1);
-        initCreateForm();
-    }
-
+    initLoginForm();
+    initCreateForm();
     createMenuActions();
     createMenuItems();
+
+    bool accountExists = m_mktsettings->exists(Configuration::settings_password_key);
+    accountExists ? showLoginScreen() : showCreateScreen();
+}
+
+void MonkeyPass::showLoginScreen() {
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MonkeyPass::showCreateScreen(){
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void MonkeyPass::initLoginForm() {
@@ -65,8 +71,6 @@ void MonkeyPass::initCreateForm() {
     mainLayout->addLayout(buttonLayout);
 
     ui->create_page->setLayout(mainLayout);
-
-
 }
 
 void MonkeyPass::createMenuItems() {
@@ -116,7 +120,9 @@ bool MonkeyPass::creationPasswordsMatch() {
 }
 
 void MonkeyPass::createNewAccount() {
-    qDebug() << "Creating Account\n";
+    QString hashedPassword = m_mktpassword->encryptPassword(m_newPassword);
+    m_mktsettings->writeSetting(Configuration::settings_password_key, hashedPassword);
+    showLoginScreen();
 }
 
 void MonkeyPass::showGenerateDialog() {
@@ -139,7 +145,6 @@ void MonkeyPass::on_actionImport_Enpass_File_triggered()
         //TODO: show error dialog
         qDebug() << "JSON parse faild\n";
         return;
-
     }
 
     auto entries = MonkeyEntry::fromEnpassJson(json_doc);
@@ -151,4 +156,6 @@ MonkeyPass::~MonkeyPass()
     delete m_mktpassword;
     delete ui;
 }
+
+
 

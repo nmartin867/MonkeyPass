@@ -1,10 +1,12 @@
 #include "mktsettings.h"
 #include <QFile>
+#include <QDebug>
 
 MKTSettings::MKTSettings(const QString &settingsFilePath)
 {
     m_settings_path = settingsFilePath;
     loadSettings();
+    qDebug() << "Settings Path: " << m_settings_path << "\n";
 }
 
 bool MKTSettings::exists(const QString &key)
@@ -27,7 +29,7 @@ QVariant MKTSettings::readSetting(const QString &key) const
     return m_settings->value(key, 0);
 }
 
-void MKTSettings::writeSetting(const QString &key, QVariant &value)
+void MKTSettings::writeSetting(const QString &key, const QVariant &value)
 {
     m_settings->setValue(key, value);
 }

@@ -22,6 +22,8 @@ private:
     MKTSettings* m_mktsettings;
     MKTPassword* m_mktpassword;
 
+    QString m_settings_path;
+
     // ui widgets
     QString  m_masterPassword;
     QString  m_newPassword;
@@ -46,6 +48,8 @@ private:
 
     void createMenuItems();
     void createMenuActions();
+    void showLoginScreen();
+    void showCreateScreen();
 private slots:
      void showGenerateDialog();
      void on_actionImport_Enpass_File_triggered();

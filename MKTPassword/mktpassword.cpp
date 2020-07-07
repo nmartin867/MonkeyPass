@@ -34,7 +34,11 @@ QString MKTPassword::encryptPassword(const QString &password) const
         //TODO: show error
     }
 
-    return QString(cPassword);
+    return QString(hashed_password);
+}
+
+QString MKTPassword::decryptPassword(const QString &password) const {
+
 }
 
 QString MKTPassword::generate(int length) const
