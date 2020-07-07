@@ -2,8 +2,9 @@
 
 #include <QVector>
 #include <QRandomGenerator>
-
 #include <vector>
+#include <sodium.h>
+#include <string.h>
 
 
 
@@ -17,6 +18,28 @@ static QVector<QChar> specialchars  { '&', '~', '#', '-', '_', '$', '%', '*', '!
 
 MKTPassword::MKTPassword()
 {
+}
+
+QString MKTPassword::encryptPassword(const QString &password) const
+{
+    char hashed_password[crypto_pwhash_STRBYTES];
+    char *cPassword = toCStr(password);
+
+    if(sodium_init() < 0) {
+        //TODO: show error
+    }
+    if (crypto_pwhash_str
+            (hashed_password, cPassword, strlen(cPassword),
+             crypto_pwhash_OPSLIMIT_SENSITIVE, crypto_pwhash_MEMLIMIT_SENSITIVE) != 0) {
+        //TODO: show error
+    }
+
+    return QString(cPassword);
+}
+
+bool MKTPassword::validPassword(const QString &password)
+{
+    auto challengeHash = encryptPassword(password);
 }
 
 QString MKTPassword::generate(int length) const
@@ -94,4 +117,9 @@ void MKTPassword::setCustomChars(const QString &customChars)
 
     for (auto c: customChars)
         m_customChars.append(c);
+}
+
+char *MKTPassword::toCStr(const QString &string) const
+{
+
 }

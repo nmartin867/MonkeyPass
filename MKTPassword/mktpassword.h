@@ -28,6 +28,9 @@ public:
 
     MKTPassword();
 
+     QString encryptPassword(const QString &password) const;
+     bool validPassword(const QString &password);
+
     QString generate(int length) const;
     PasswordHealth testPasswordHealth(const QString &password) const;
 
@@ -41,6 +44,8 @@ public:
 private:
     SymbolTypes m_types;
     QVector<QChar> m_customChars;
+
+    char* toCStr(const QString &string) const;
 };
 
 
